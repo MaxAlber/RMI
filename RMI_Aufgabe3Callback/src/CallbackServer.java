@@ -12,9 +12,22 @@ import java.io.*;
  * @author M. L. Liu
  */
 
-public class CallbackServer
+public class CallbackServer extends UnicastRemoteObject implements Question
 {
-  public static void main(String args[])
+	protected CallbackServer() throws RemoteException
+	{
+		super();
+	}
+	
+	
+	 public String makeQues(String ques) throws RemoteException
+	 {
+		  return "Die Antwort auf deine Frage " + ques + " ist wahrscheinlich 61";
+	 }
+	 
+	 
+
+public static void main(String args[])
   {
     InputStreamReader is = new InputStreamReader(System.in);
     BufferedReader br = new BufferedReader(is);
@@ -45,8 +58,7 @@ public class CallbackServer
   {
     try
     {
-    	Registry registry = 
-    	LocateRegistry.getRegistry(RMIPortNum);
+    	Registry registry = LocateRegistry.getRegistry(RMIPortNum);
     	registry.list( );  
         // This call will throw an exception
         // if the registry does not already exist
@@ -55,9 +67,14 @@ public class CallbackServer
     catch (RemoteException e)
     { 
     	// No valid registry at that port.
-    	Registry registry = 
-        LocateRegistry.createRegistry(RMIPortNum);
+    	Registry registry = LocateRegistry.createRegistry(RMIPortNum);
     }
   } // end startRegistry
+
+  
+  
+ 
+  
+  
 
 } // end class
